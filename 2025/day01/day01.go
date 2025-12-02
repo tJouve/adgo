@@ -2,32 +2,62 @@ package day01
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
-	"AD2025/internal/aoc"
+	"adgo/2025/day01/dial"
+	"adgo/internal/aoc"
 )
 
 func init() {
-	// register each part separately (compat: year 0)
-	aoc.RegisterPart(1, 1, Part1)
-	aoc.RegisterPart(1, 2, Part2)
-	// also register under year 2026
-	aoc.RegisterPartYear(2026, 1, 1, Part1)
-	aoc.RegisterPartYear(2026, 1, 2, Part2)
+	year := 2025
+	day := 1
+	// also register under year 0
+	aoc.RegisterPartYear(year, day, 1, Part1)
+	//aoc.RegisterPartYear(year, day, 2, Part2)
 }
 
-// Part1: sum of ints
+// Part1:
 func Part1(input string) (string, error) {
 	lines := aoc.Lines(strings.TrimSpace(input))
-	ints, err := aoc.Ints(lines)
-	if err != nil {
-		return "", fmt.Errorf("parse ints: %w", err)
+	d := dial.New(0, 99)
+	result := 0
+	for _, line := range lines {
+		s := strings.TrimSpace(line)
+		if s == "" {
+			continue
+		}
+		// detect direction
+		hasL := strings.ContainsAny(s, "Ll")
+		hasR := strings.ContainsAny(s, "Rr")
+		if !hasL && !hasR {
+			// nothing to do
+			continue
+		}
+		// remove L/R characters to get the numeric part (default to 1)
+		clean := strings.Map(func(r rune) rune {
+			if r == 'L' || r == 'R' || r == 'l' || r == 'r' {
+				return -1
+			}
+			return r
+		}, s)
+		clean = strings.TrimSpace(clean)
+		steps := 1
+		if clean != "" {
+			if n, err := strconv.Atoi(clean); err == nil {
+				steps = n
+			}
+		}
+		if hasL {
+			d.RotateLeft(steps)
+		} else {
+			d.RotateRight(steps)
+		}
+		if d.Current == 0 {
+			result++
+		}
 	}
-	sum := 0
-	for _, v := range ints {
-		sum += v
-	}
-	return fmt.Sprintf("%d", sum), nil
+	return fmt.Sprintf("%d", result), nil
 }
 
 // Part2: count of ints

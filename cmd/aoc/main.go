@@ -6,14 +6,15 @@ import (
 	"os"
 	"path/filepath"
 
-	_ "AD2025/2025/day01"
-	"AD2025/internal/aoc"
+	_ "adgo/2025/day01"
+	"adgo/internal/aoc"
 )
 
 func main() {
-	year := flag.Int("year", 0, "year to run (0=last)")
+	year := flag.Int("year", 2025, "year to run (0=last)")
 	day := flag.Int("day", 0, "day to run (0=last)")
 	part := flag.Int("part", -1, "part to run (-1=last,0=both,1,2)")
+	test := flag.Bool("test", true, "use sample input if true, real input if false. This option is override by -input.")
 	inputPath := flag.String("input", "", "path to input file (defaults to days/<year>/dayNN/data/myinput.txt or stdin)")
 	flag.Parse()
 
@@ -63,19 +64,19 @@ func main() {
 
 	input := *inputPath
 	if input == "" {
-		// try default path with year
-		p := filepath.Join("days", fmt.Sprintf("%d", yearVal), fmt.Sprintf("day%02d", dayVal), "data", "myinput.txt")
-		if _, err := os.Stat(p); err == nil {
-			input = p
+		if *test {
+			// try sample path with year: days/<year>/dayNN/data/sample.txt
+			input = filepath.Join(fmt.Sprintf("%d", yearVal), fmt.Sprintf("day%02d", dayVal), "data", "sample.txt")
 		} else {
-			// fallback to old path without year for compatibility
-			p2 := filepath.Join("days", fmt.Sprintf("day%02d", dayVal), "data", "myinput.txt")
-			if _, err2 := os.Stat(p2); err2 == nil {
-				input = p2
-			}
+			input = filepath.Join(fmt.Sprintf("%d", yearVal), fmt.Sprintf("day%02d", dayVal), "data", "myinput.txt")
 		}
 	}
-
+	if _, err := os.Stat(input); err == nil {
+		fmt.Printf("Trying sample path: %s\n", input)
+	} else {
+		fmt.Fprintf(os.Stderr, "failed to read input: %v\n", err)
+		os.Exit(2)
+	}
 	inStr, err := aoc.ReadInput(input)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to read input: %v\n", err)

@@ -1,7 +1,7 @@
 .PHONY: test fmt run
 
 run:
-	@go run ./cmd/aoc --day $(DAY) --part $(PART) --input $(INPUT)
+	@go run ./cmd/aoc
 
 test:
 	@go test ./...
