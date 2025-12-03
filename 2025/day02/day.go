@@ -2,17 +2,15 @@ package day01
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
-	"adgo/2025/day01/dial"
+	"adgo/2025/day02/range"
 	"adgo/internal/aoc"
 )
 
 func init() {
 	year := 2025
-	day := 1
-	// also register under year 0
+	day := 2
 	aoc.RegisterPartYear(year, day, 1, Part1)
 	aoc.RegisterPartYear(year, day, 2, Part2)
 }
@@ -20,81 +18,29 @@ func init() {
 // Part1:
 func Part1(input string) (string, error) {
 	lines := aoc.Lines(strings.TrimSpace(input))
-	d := dial.New(0, 99)
-	result := 0
-	for _, line := range lines {
-		s := strings.TrimSpace(line)
-		if s == "" {
-			continue
-		}
-		// detect direction
-		hasL := strings.ContainsAny(s, "Ll")
-		hasR := strings.ContainsAny(s, "Rr")
-		if !hasL && !hasR {
-			// nothing to do
-			continue
-		}
-		// remove L/R characters to get the numeric part (default to 1)
-		clean := strings.Map(func(r rune) rune {
-			if r == 'L' || r == 'R' || r == 'l' || r == 'r' {
-				return -1
-			}
-			return r
-		}, s)
-		clean = strings.TrimSpace(clean)
-		steps := 1
-		if clean != "" {
-			if n, err := strconv.Atoi(clean); err == nil {
-				steps = n
-			}
-		}
-		if hasL {
-			d.RotateLeft(steps)
-		} else {
-			d.RotateRight(steps)
-		}
-		if d.Current == 0 {
-			result++
+	ranges := strings.Split(lines[0], ",")
+	total := 0
+	for _, r := range ranges {
+		currentRange := _range.Parse(r)
+		dup := currentRange.Twice()
+		for _, v := range dup {
+			total += v
 		}
 	}
-	return fmt.Sprintf("Part 1 : %d", result), nil
+	return fmt.Sprintf("Part 1 : %d", total), nil
 }
 
 // Part2: count clicks
 func Part2(input string) (string, error) {
 	lines := aoc.Lines(strings.TrimSpace(input))
-	d := dial.New(0, 99)
-	for _, line := range lines {
-		s := strings.TrimSpace(line)
-		if s == "" {
-			continue
-		}
-		// detect direction
-		hasL := strings.ContainsAny(s, "Ll")
-		hasR := strings.ContainsAny(s, "Rr")
-		if !hasL && !hasR {
-			// nothing to do
-			continue
-		}
-		// remove L/R characters to get the numeric part (default to 1)
-		clean := strings.Map(func(r rune) rune {
-			if r == 'L' || r == 'R' || r == 'l' || r == 'r' {
-				return -1
-			}
-			return r
-		}, s)
-		clean = strings.TrimSpace(clean)
-		steps := 1
-		if clean != "" {
-			if n, err := strconv.Atoi(clean); err == nil {
-				steps = n
-			}
-		}
-		if hasL {
-			d.RotateLeft(steps)
-		} else {
-			d.RotateRight(steps)
+	ranges := strings.Split(lines[0], ",")
+	total := 0
+	for _, r := range ranges {
+		currentRange := _range.Parse(r)
+		dup := currentRange.Duplicate()
+		for _, v := range dup {
+			total += v
 		}
 	}
-	return fmt.Sprintf("Part 2 : %d", d.Click), nil
+	return fmt.Sprintf("Part 2 : %d", total), nil
 }

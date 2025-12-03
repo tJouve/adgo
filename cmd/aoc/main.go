@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	_ "adgo/2025/day01"
+	_ "adgo/2025/day02"
 	"adgo/internal/aoc"
 )
 
