@@ -41,14 +41,15 @@ func searchMaxX(input string, batLen int) int {
 	for i := 0; i < batLen; i++ {
 		//remaining cells to find
 		rem := batLen - (i + 1)
+		//rem := batLen - (len(found) + 1)
 		limit := len(bank) - rem
 		//Test current index
 		index := start
 		//Index Value
 		d := string(bank[start])
 		dv, _ := strconv.Atoi(d)
-		// Find the Bigger number after
-		for j := start; j < limit; j++ {
+		// Find Bigger number than me after
+		for j := start + 1; j < limit; j++ {
 			jv, _ := strconv.Atoi(string(bank[j]))
 			if jv > dv {
 				//Yes
