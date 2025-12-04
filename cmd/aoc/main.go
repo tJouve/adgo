@@ -9,6 +9,7 @@ import (
 	_ "adgo/2025/day01"
 	_ "adgo/2025/day02"
 	_ "adgo/2025/day03"
+	_ "adgo/2025/day04"
 	"adgo/internal/aoc"
 )
 
