@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "adgo/2025/day05"
 	"flag"
 	"fmt"
 	"os"

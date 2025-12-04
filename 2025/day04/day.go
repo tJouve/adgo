@@ -1,4 +1,4 @@
-package day01
+package day05
 
 import (
 	Grid "adgo/2025/day04/grid"
