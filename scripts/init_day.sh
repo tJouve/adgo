@@ -141,4 +141,4 @@ Created: $DIR
 Edited : $MAIN (to add import)
 
 MSG
-
+git add "$DIR" "$MAIN"
