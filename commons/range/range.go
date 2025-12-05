@@ -38,6 +38,40 @@ func (d *Range) Twice() []int {
 	}
 	return result
 }
+
+func (d *Range) OverlapLenInclusive(o *Range) int {
+	_len := 0
+	if d.Start <= o.End && o.Start <= d.End {
+		_len = min(o.End-d.Start, d.End-o.Start) + 1
+		fmt.Printf("Overlap: %s & %s => %d\n", d, o, _len)
+	}
+	return _len
+}
+
+func (d *Range) LenInclusive() int {
+	return d.End - d.Start + 1
+}
+
+func (d *Range) LenExclusive() int {
+	return d.End - d.Start - 1
+}
+
+func (d *Range) Extend() []int {
+	result := make([]int, 0)
+	for i := d.Start; i <= d.End; i++ {
+		result = append(result, i)
+	}
+	return result
+}
+
+func (d *Range) IsInInclusive(value int) bool {
+	return value >= d.Start && value <= d.End
+}
+
+func (d *Range) IsInExclusive(value int) bool {
+	return value > d.Start && value < d.End
+}
+
 func (d *Range) Duplicate() []int {
 	result := make([]int, 0)
 
@@ -70,4 +104,7 @@ func (d *Range) Duplicate() []int {
 		}
 	}
 	return result
+}
+func (d *Range) String() string {
+	return fmt.Sprintf("%d-%d", d.Start, d.End)
 }

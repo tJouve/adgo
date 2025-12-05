@@ -1,10 +1,10 @@
 package day01
 
 import (
+	"adgo/commons/range"
 	"fmt"
 	"strings"
 
-	"adgo/2025/day02/range"
 	"adgo/internal/aoc"
 )
 
