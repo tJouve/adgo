@@ -96,7 +96,7 @@ func main() {
 				fmt.Fprintf(os.Stderr, "part1 failed: %v\n", err)
 				os.Exit(1)
 			}
-			fmt.Printf("Part 1: %s\n", p1)
+			fmt.Printf("D%d P%d : %s\n", dayVal, partVal, p1)
 		} else {
 			fmt.Println("Part 1: <not implemented>")
 		}
@@ -106,7 +106,7 @@ func main() {
 				fmt.Fprintf(os.Stderr, "part2 failed: %v\n", err)
 				os.Exit(1)
 			}
-			fmt.Printf("Part 2: %s\n", p2)
+			fmt.Printf("D%d P%d : %s\n", dayVal, partVal, p2)
 		} else {
 			fmt.Println("Part 2: <not implemented>")
 		}
@@ -120,7 +120,7 @@ func main() {
 			fmt.Fprintf(os.Stderr, "part1 failed: %v\n", err)
 			os.Exit(1)
 		}
-		fmt.Println(p1)
+		fmt.Printf("D%d P%d : %s\n", dayVal, partVal, p1)
 	case 2:
 		if p2fn == nil {
 			fmt.Fprintln(os.Stderr, "part 2 not implemented for this day")
@@ -131,9 +131,9 @@ func main() {
 			fmt.Fprintf(os.Stderr, "part2 failed: %v\n", err)
 			os.Exit(1)
 		}
-		fmt.Println(p2)
+		fmt.Printf("D%d P%d : %s\n", dayVal, partVal, p2)
 	default:
-		fmt.Fprintln(os.Stderr, "invalid part, must be 0,1,2 or -1 for last")
+		fmt.Fprintln(os.Stderr, "invalid part, must be 0,1,2 for last")
 		os.Exit(2)
 	}
 }

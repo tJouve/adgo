@@ -66,7 +66,7 @@ func Part2Brute(input string) (string, error) {
 		all = append(all, ex...)
 	}
 	all = removeDuplicateInt(all)
-	return fmt.Sprintf("Part 1 : %d", len(all)), nil
+	return strconv.Itoa(len(all)), nil
 }
 
 func Part2(input string) (string, error) {
@@ -89,7 +89,7 @@ func Part2(input string) (string, error) {
 			total -= overlap
 		}
 	}
-	return fmt.Sprintf("Part 2 : %d", total), nil
+	return fmt.Sprintf("%d", total), nil
 }
 
 func removeDuplicateInt(intSlice []int) []int {

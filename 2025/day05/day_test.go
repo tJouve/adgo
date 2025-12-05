@@ -7,5 +7,7 @@ import (
 )
 
 func TestPartsExample(t *testing.T) {
-	aoc.RunPartsTest(t, "data/sample2.txt", nil, Part2, "", "15")
+	input, _ := aoc.ReadInput("data/sample2.txt")
+	bf, _ := Part2Brute(input)
+	aoc.RunPartsTest(t, "data/sample2.txt", nil, Part2, "", bf)
 }
