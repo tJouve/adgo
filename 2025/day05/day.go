@@ -2,6 +2,8 @@ package day05
 
 import (
 	"fmt"
+	"slices"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -79,15 +81,40 @@ func Part2(input string) (string, error) {
 		r := _range.Parse(line)
 		interval = append(interval, r)
 	}
+	sort.SliceStable(interval, func(i, j int) bool {
+		d := interval[i]
+		o := interval[j]
+		if d.Start < o.Start {
+			return true
+		}
+		if d.Start > o.Start {
+			return false
+		}
+		if d.End < o.End {
+			return true
+		}
+		if d.End > o.End {
+			return false
+		}
+		return false
+	})
 
 	total := 0
 	for i, r := range interval {
 		_len := r.LenInclusive()
 		total += _len
+		var overlaps []int
 		for _, other := range interval[i+1:] {
 			overlap := r.OverlapLenInclusive(other)
-			total -= overlap
+			overlaps = append(overlaps, overlap)
+
 		}
+		slices.Sort(overlaps)
+		if len(overlaps) > 0 {
+			total -= overlaps[len(overlaps)-1]
+		}
+
+		fmt.Printf("Current %s Total: %d\n", r, total)
 	}
 	return fmt.Sprintf("%d", total), nil
 }
